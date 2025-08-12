@@ -1,0 +1,18 @@
+.checkout-bg {
+  background: #f8f9fa;
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.checkout-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.checkout-room-img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  height: 200px;
+}

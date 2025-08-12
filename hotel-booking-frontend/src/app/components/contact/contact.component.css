@@ -1,0 +1,20 @@
+.bookings-bg {
+  background: #f9f9fb;
+  min-height: 100vh;
+  padding: 40px 0;
+}
+
+.booking-card {
+  background: #fff;
+  border-left: 5px solid #007bff;
+  transition: 0.3s;
+}
+.booking-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+.price {
+  color: #e63946;
+  font-size: 1.2rem;
+  font-weight: bold;
+}

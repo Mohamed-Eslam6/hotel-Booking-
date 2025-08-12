@@ -1,0 +1,39 @@
+<div class="hotel-details-bg" *ngIf="hotel">
+
+  <div class="hotel-banner" [style.backgroundImage]="'url(' + (hotel.imageUrl || '../../../assets/hotels/default.jpg') + ')'">
+    <div class="overlay"></div>
+    <h1 class="hotel-title">{{ hotel.name }}</h1>
+    <p class="hotel-location">{{ hotel.location }}</p>
+  </div>
+
+  <div class="container my-4">
+    <div class="hotel-info">
+      <h2 class="fw-bold">{{ hotel.name }}</h2>
+      <p class="text-muted">{{ hotel.description }}</p>
+      <p class="price">💲 {{ hotel.pricePerNight }} / night</p>
+    </div>
+
+    <h3 class="mt-4 mb-3"> Available Rooms</h3>
+    <div class="row g-4">
+      <div class="col-md-4" *ngFor="let room of hotel.rooms">
+        <div class="room-card shadow-sm">
+          <img [src]="room.imageUrl || '../../../assets/rooms/default.jpg'" 
+               alt="{{ room.roomType }}" class="room-img" loading="lazy">
+          <div class="room-info p-3">
+            <h5>{{ room.roomType }}</h5>
+            <p class="text-muted">Capacity: {{ room.capacity }}</p>
+            <p class="room-price">💲 {{ room.price }} / night</p>
+            <button class="btn btn-success w-100" [routerLink]="['/checkout', room._id]">
+  Book Room
+</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!hotel" class="text-center mt-5">
+  <h3>Loading hotel details...</h3>
+</div>

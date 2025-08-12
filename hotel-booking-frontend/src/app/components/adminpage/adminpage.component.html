@@ -1,0 +1,110 @@
+<div class="admin-layout">
+
+  <aside class="sidebar">
+    <h2> System</h2>
+    <ul>
+      <li (click)="goHome()"> Home</li>
+      <li [class.active]="activeTab === 'hotels'" (click)="setTab('hotels')">Hotels</li>
+<li [class.active]="activeTab === 'customers'" (click)="setTab('customers')">Customers</li>
+      <li [class.active]="activeTab === 'bookings'" (click)="setTab('bookings')">Bookings</li>
+      <button class="btn primary" (click)="goToAddHotel()">➕ Add Hotel</button>
+    </ul>
+  </aside>
+
+  <div class="main-content" *ngIf="!loading; else spinner">
+
+    <div *ngIf="activeTab === 'hotels'">
+      <h2 class="title"> Manage Hotels</h2>
+      <div class="hotels-grid" *ngIf="hotels.length > 0; else noHotels">
+        <div class="hotel-card" *ngFor="let h of hotels">
+          <img [src]="h.imageUrl || 'assets/hotels/default.jpg'" class="hotel-img">
+          <div class="hotel-details">
+            <h3>{{ h.name }}</h3>
+            <p class="location">📍 {{ h.location }}</p>
+            <div class="hotel-actions">
+              <button class="btn edit" (click)="editHotel(h._id)"> Edit</button>
+              <button class="btn danger" (click)="deleteHotel(h._id)"> Delete</button>
+              <button class="btn success" (click)="goToAddRoom(h._id)"> Add Room</button>
+              <button class="btn danger" (click)="openDeleteRoom(h._id)"> Delete Room</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+<div class="container my-4" *ngIf="activeTab === 'customers'">
+  <h2 class="text-center mb-4">Customers List</h2>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+  <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Created At</th> 
+  </tr>
+</thead>
+<tbody>
+  <tr *ngFor="let customer of customers; let i = index">
+    <td>{{ i + 1 }}</td>
+    <td>{{ customer.name }}</td>
+    <td>{{ customer.email }}</td>
+    <td>{{ customer.createdAt | date:'medium' }}</td> 
+  </tr>
+</tbody>
+
+  </table>
+
+  <div *ngIf="customers.length === 0" class="alert alert-warning text-center">
+    No customers found.
+  </div>
+</div>
+
+
+    <div *ngIf="activeTab === 'bookings'">
+      <h2 class="title"> All Bookings</h2>
+      <div class="bookings-grid" *ngIf="bookings.length > 0; else noData">
+        <div class="booking-card" *ngFor="let b of bookings">
+          <h4>👤 {{ (b.userEmail || b.email || 'Unknown User').split('@')[0] }}</h4>
+          <p><strong>Email:</strong> {{ b.user?.email || b.userEmail }}</p>
+          <p><strong>Hotel:</strong> {{ b.room?.hotel?.name || 'N/A' }}</p>
+          <p><strong>Room:</strong> {{ b.room?.roomType || 'N/A' }}</p>
+          <p><strong>Check-In:</strong> {{ b.checkIn | date:'mediumDate' }}</p>
+          <p><strong>Check-Out:</strong> {{ b.checkOut | date:'mediumDate' }}</p>
+          <p class="price">💲 {{ b.totalPrice }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" *ngIf="showRoomDeleteModal">
+      <div class="modal-content">
+        <h3>🗑 Delete Room</h3>
+        <p>Select the room you want to delete:</p>
+        <div class="room-list">
+          <div class="room-card" *ngFor="let r of selectedHotelRooms">
+            <img [src]="r.imageUrl || 'assets/rooms/default.jpg'" alt="room">
+            <div>
+              <h4>{{ r.roomType }}</h4>
+              <p>Capacity: {{ r.capacity }}</p>
+              <p>💲 {{ r.price }}</p>
+            </div>
+            <button class="btn danger" (click)="confirmDeleteRoom(r._id)"> Delete</button>
+          </div>
+        </div>
+        <button class="btn secondary" (click)="closeModal()"> Close</button>
+      </div>
+    </div>
+
+    <ng-template #noHotels>
+      <div class="no-data">⚠ No hotels found.</div>
+    </ng-template>
+    <ng-template #noData>
+      <div class="no-data">⚠ No bookings found.</div>
+    </ng-template>
+
+  </div>
+</div>
+
+<ng-template #spinner>
+  <div class="loading">⏳ Loading data...</div>
+</ng-template>

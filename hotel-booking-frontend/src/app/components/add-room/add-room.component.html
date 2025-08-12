@@ -1,0 +1,26 @@
+<div class="add-room">
+  <h2>➕ Add New Room</h2>
+
+  <form (ngSubmit)="saveRoom()">
+    <label>🛏 Room Type</label>
+    <input type="text" [(ngModel)]="roomData.roomType" name="roomType" placeholder="Single, Double, Suite..." required>
+
+    <label>👥 Capacity</label>
+    <input type="number" [(ngModel)]="roomData.capacity" name="capacity" min="1" required>
+
+    <label>💰 Price</label>
+    <input type="number" [(ngModel)]="roomData.price" name="price" min="0" required>
+
+    <label>📷 Image URL</label>
+    <input type="text" [(ngModel)]="roomData.imageUrl" name="imageUrl" placeholder="http://...">
+
+    <label>Status</label>
+    <select [(ngModel)]="roomData.status" name="status">
+      <option value="available">Available</option>
+      <option value="booked">Booked</option>
+    </select>
+
+    <button type="submit" class="btn primary">💾 Save Room</button>
+    <button type="button" class="btn secondary" (click)="router.navigate(['/admin'])">⬅ Cancel</button>
+  </form>
+</div>

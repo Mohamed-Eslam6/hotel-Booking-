@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+
+<div class="checkout-bg">
+  <div class="container my-5">
+    <h2 class="text-center fw-bold mb-4"> Checkout</h2>
+
+    <div class="checkout-card shadow p-4 rounded mx-auto" style="max-width: 500px;">
+      <div *ngIf="room">
+        <img [src]="room.imageUrl || '../../../assets/rooms/default.jpg'" alt="{{ room.roomType }}" class="checkout-room-img mb-3">
+        <h4>{{ room.roomType }}</h4>
+        <p class="text-muted">💲 Price per night: {{ room.price }}</p>
+      </div>
+
+      <hr>
+
+      <label>🛏️ Number of Nights</label>
+      <input type="number" [(ngModel)]="nights" min="1" class="form-control mb-3">
+
+      <label>💳 Payment Method</label>
+      <select [(ngModel)]="paymentMethod" class="form-control mb-3">
+        <option value="card">Credit/Debit Card</option>
+        <option value="cash">Cash on Arrival</option>
+      </select>
+
+      <div *ngIf="paymentMethod === 'card'">
+        <label>💳 Card Number</label>
+        <input type="text" [(ngModel)]="cardNumber" class="form-control mb-3" placeholder="Enter your card number">
+      </div>
+
+      <button class="btn btn-success w-100" (click)="confirmBooking()">✅ Confirm Booking</button>
+    </div>
+  </div>
+</div>

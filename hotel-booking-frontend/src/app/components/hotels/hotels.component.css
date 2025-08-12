@@ -1,0 +1,94 @@
+.hotels-bg {
+  background: linear-gradient(135deg, #f9fbfc, #eef2f7); /* 🎨 Gradient فاتح */
+  min-height: 100vh;
+  padding: 20px 0; /* عشان navbar */
+}
+
+/* 🔹 العنوان */
+h2 {
+  font-size: 2.5rem;
+  color: #2c3e50;
+  margin-bottom: 40px;
+}
+
+/* 🔹 تصميم الكارد */
+.hotel-card {
+  background: #ffffff;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+.hotel-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 🔹 صورة الفندق */
+.hotel-img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+/* 🔹 معلومات الفندق */
+.hotel-info {
+  background: #fff;
+  padding: 15px;
+}
+.hotel-info h5 {
+  color: #1a1a1a;
+  font-weight: bold;
+}
+.hotel-info .text-muted {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+.hotel-info .price {
+  font-size: 1.2rem;
+  color: #e63946; /* لون السعر مميز */
+  font-weight: bold;
+}
+
+/* 🔹 زر الحجز */
+.hotel-info .btn {
+  border-radius: 25px;
+  background: #457b9d; /* أزرق هادي */
+  border: none;
+  transition: 0.3s ease;
+}
+.hotel-info .btn:hover {
+  background: #1d3557; /* أزرق أغمق عند الـ hover */
+}
+.hotel-stars {
+  margin: 5px 0 10px;
+  display: flex;
+  gap: 3px;
+}
+
+.hotel-stars .fa {
+  font-size: 1.1rem;
+  color: #ddd;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.hotel-stars .fa.checked {
+  color: #ffc107; /* ذهبي */
+}
+
+.hotel-stars .fa:hover {
+  transform: scale(1.2);
+  color: #ff9800;
+}
+.hotel-viewport {
+  height: 100vh;     /* ✅ خلي الـ Viewport طول الشاشة */
+  width: 100%;
+  overflow: auto;
+}
+
+.hotel-item {
+  padding: 10px;
+}
+
+
+

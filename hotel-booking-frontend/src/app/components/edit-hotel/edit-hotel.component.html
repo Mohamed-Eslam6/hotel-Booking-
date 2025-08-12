@@ -1,0 +1,95 @@
+<div class="edit-page" *ngIf="!loading; else loadingTpl">
+  <div class="header">
+    <h2>Edit Hotel / Rooms</h2>
+    <div class="actions">
+      <button class="btn" (click)="goBack()">← Back</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button [class.active]="activeTab === 'hotel'" (click)="setTab('hotel')">Edit Hotel</button>
+    <button [class.active]="activeTab === 'rooms'" (click)="setTab('rooms')">Edit Rooms</button>
+  </div>
+
+  <section *ngIf="activeTab === 'hotel'" class="card">
+    <h3>Hotel Details</h3>
+
+    <div class="grid">
+      <div class="left">
+        <label> Name </label>
+        <input [(ngModel)]="hotel.name" name="name" />
+
+        <label> Location </label>
+        <input [(ngModel)]="hotel.location" name="location" />
+
+        <label> Description </label>
+        <textarea [(ngModel)]="hotel.description" name="description" rows="4"></textarea>
+
+        <label> Price Per Night </label>
+        <input [(ngModel)]="hotel.pricePerNight" name="pricePerNight" />
+        
+
+        <label> Image URL (direct) </label>
+        <input [(ngModel)]="hotel.imageUrl" name="imageUrl" placeholder="optional direct image URL" />
+
+        <div class="form-actions">
+          <button class="btn primary" (click)="saveHotel()" [disabled]="saving">Save Hotel</button>
+          <button class="btn secondary" (click)="goBack()">Cancel</button>
+        </div>
+      </div>
+
+      <div class="right">
+        <p><strong>Preview</strong></p>
+        <img [src]="hotel.imageUrl || (hotel.image ? 'assets/hotels/' + hotel.image : 'assets/hotels/default.jpg')" alt="hotel preview" class="preview-img" />
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="activeTab === 'rooms'" class="card">
+    <h3>Rooms ({{ rooms.length }})</h3>
+
+    <div class="rooms-container">
+      <div class="rooms-list">
+        <div class="room-row" *ngFor="let r of rooms">
+          <img [src]="r.imageUrl || (r.image ? 'assets/rooms/' + r.image : 'assets/rooms/default.jpg')" class="room-thumb" />
+          <div class="room-meta">
+            <div class="room-title">{{ r.roomType || r.name || 'Room' }}</div>
+            <div class="room-sub">Capacity: {{ r.capacity || '-' }} — Price: {{ r.price || '-' }}</div>
+          </div>
+          <div class="room-actions">
+            <button class="btn" (click)="pickRoom(r)">Edit</button>
+            <button class="btn danger" (click)="deleteRoom(r._id)">Delete</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="room-editor" *ngIf="selectedRoom; else selectRoomMsg">
+        <h4>Editing Room</h4>
+        <label>Type / Name</label>
+        <input [(ngModel)]="selectedRoom.roomType" name="roomType" />
+
+        <label>Capacity</label>
+        <input type="number" [(ngModel)]="selectedRoom.capacity" name="capacity" />
+
+        <label>Price</label>
+        <input type="number" [(ngModel)]="selectedRoom.price" name="price" />
+
+        <label>Image URL (direct)</label>
+        <input [(ngModel)]="selectedRoom.imageUrl" name="roomImageUrl" />
+
+        <div class="form-actions">
+          <button class="btn primary" (click)="saveRoom()" [disabled]="saving">Save Room</button>
+          <button class="btn secondary" (click)="cancelRoomEdit()">Cancel</button>
+        </div>
+      </div>
+
+      <ng-template #selectRoomMsg>
+        <div class="room-empty">Select a room to edit it</div>
+      </ng-template>
+    </div>
+  </section>
+</div>
+
+<ng-template #loadingTpl>
+  <div class="loading">⏳ Loading...</div>
+</ng-template>

@@ -1,0 +1,167 @@
+/* 🌿 Layout عام */
+.admin-layout {
+  display: flex;
+  height: 100vh;
+  background: #f8f9fb;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+}
+
+/* ✅ Sidebar */
+.sidebar {
+  width: 230px;
+  background: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+.sidebar h2 {
+  font-size: 22px;
+  color: #2c3e50;
+  margin-bottom: 25px;
+}
+.sidebar ul { list-style: none; padding: 0; }
+.sidebar li {
+  padding: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+.sidebar li:hover {
+  background: #f0f4ff;
+  transform: translateX(3px);
+}
+.sidebar li.active {
+  background: #dbe9ff;
+  font-weight: bold;
+  border-left: 4px solid #4a90e2;
+}
+
+/* ✅ Main Content */
+.main-content {
+  flex: 1;
+  padding: 25px;
+  overflow-y: auto;
+}
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #34495e;
+}
+
+/* ✅ Grid للفنادق: 3 فقط */
+.hotels-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ✅ Hotel Card */
+.hotel-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #ececec;
+  overflow: hidden;
+  transition: 0.3s ease-in-out;
+}
+.hotel-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+.hotel-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.hotel-details { padding: 15px; }
+.hotel-details h3 { margin: 5px 0; font-size: 18px; }
+.location { color: #777; font-size: 14px; }
+
+/* ✅ أزرار الإدارة داخل الفندق */
+.hotel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+.btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.25s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.btn:hover { transform: scale(1.05); }
+
+/* 🎨 ألوان الأزرار */
+.btn.edit { background: #e3f2fd; color: #1565c0; }
+.btn.edit:hover { background: #bbdefb; }
+
+.btn.danger { background: #fdecea; color: #b71c1c; }
+.btn.danger:hover { background: #f8d7da; }
+
+.btn.success { background: #e8f5e9; color: #2e7d32; }
+.btn.success:hover { background: #c8e6c9; }
+
+.btn.warning { background: #fff4e5; color: #ef6c00; }
+.btn.warning:hover { background: #ffe0b2; }
+
+.btn.primary { background: #dbe9ff; color: #1c3faa; }
+.btn.primary:hover { background: #bcd4ff; }
+
+/* ✅ Bookings Grid */
+.bookings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.booking-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+}
+.price { color: #27ae60; font-weight: bold; }
+
+/* ✅ Modal لحذف الغرف */
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  width: 450px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.room-list {
+  max-height: 250px;
+  overflow-y: auto;
+  margin: 10px 0;
+}
+.room-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f9f9f9;
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 8px;
+}
+.room-card img {
+  width: 60px;
+  height: 40px;
+  border-radius: 5px;
+  object-fit: cover;
+}

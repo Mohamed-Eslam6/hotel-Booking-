@@ -1,0 +1,48 @@
+<div class="register-container">
+  <div class="register-card shadow-lg p-4">
+    <h3 class="text-center mb-4 text-success">Create an Account</h3>
+
+    <form (ngSubmit)="register()" #registerForm="ngForm" novalidate>
+
+      <div class="mb-3">
+        <label>Name</label>
+        <input type="text" class="form-control" [(ngModel)]="name" name="name" required #nameInput="ngModel" />
+        <div *ngIf="submitted && nameInput.invalid" class="text-danger small">Name is required.</div>
+      </div>
+
+      <div class="mb-3">
+  <label>Email</label>
+  <input type="email" class="form-control" [(ngModel)]="email" name="email" required #emailInput="ngModel" />
+  <div *ngIf="submitted && emailInput.invalid" class="text-danger small">
+    <div *ngIf="emailInput.errors?.['required']">Email is required.</div>
+
+    <div *ngIf="!emailInput.errors?.['required'] && (emailInput.errors?.['email'] || (submitted && !validateEmail(email)))">
+      Invalid email format.
+    </div>
+  </div>
+</div>
+
+
+      <div class="mb-3">
+        <label>Password</label>
+        <input type="password" class="form-control" [(ngModel)]="password" name="password" required #passwordInput="ngModel" />
+        <div *ngIf="submitted && passwordInput.invalid" class="text-danger small">Password is required.</div>
+      </div>
+
+      <div class="mb-3">
+        <label>Confirm Password</label>
+        <input type="password" class="form-control" [(ngModel)]="confirmPassword" name="confirmPassword" required #confirmPasswordInput="ngModel" />
+        <div *ngIf="submitted && confirmPasswordInput.invalid" class="text-danger small">Confirm Password is required.</div>
+      </div>
+
+      <div *ngIf="passwordMismatch" class="alert alert-danger p-2 text-center">
+        Passwords do not match!
+      </div>
+
+      <button type="submit" class="btn btn-success w-100">Register</button>
+      <button type="button" class="btn btn-secondary w-100 mt-2" (click)="goHome()">⬅ Back to Home</button>
+    </form>
+
+    <p *ngIf="error" class="text-danger text-center mt-2">{{ error }}</p>
+  </div>
+</div>

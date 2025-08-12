@@ -1,0 +1,29 @@
+<app-navbar></app-navbar>
+<div class="hotels-bg">
+<div class="container my-5">
+  <h2 class="text-center mb-4 fw-bold"> Explore Our Hotels</h2>
+
+  <div class="row g-4">
+    <div class="col-md-4" *ngFor="let hotel of hotels">
+      <div class="hotel-card shadow-sm">
+        <img [src]="hotel.imageUrl" alt="{{hotel.name}}" class="hotel-img">
+        <div class="hotel-info p-3">
+          <h5 class="fw-bold">{{ hotel.name }}</h5>
+          <p class="text-muted">{{ hotel.location }}</p>
+          <div class="hotel-stars">
+  <ng-container *ngFor="let star of [].constructor(7); let i = index">
+    <i class="fa" [ngClass]="i < hotel.rating ? 'fa-star checked' : 'fa-star-o'"></i>
+  </ng-container>
+</div>
+
+          <p class="price">${{ hotel.pricePerNight }} / night</p>
+          <button class="btn btn-primary w-100" [routerLink]="['/hotels', hotel._id]">
+  Book Room
+</button>
+ 
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

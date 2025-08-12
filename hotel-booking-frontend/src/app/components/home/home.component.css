@@ -1,0 +1,80 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* 🔹 Background */
+.hero-bg {
+  background: url('../../../assets/780f4d2a378e923e044cf0b73faf559b.jpg') center/cover no-repeat;
+  width: 100vw;
+  height: 100vh; /* ✅ الصورة تغطي الشاشة كلها */
+  position: relative;
+  padding-top: 70px; /* ✅ تخلي الصورة تبدأ من تحت الـ Navbar */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hero-content .title {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.hero-content .subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+.search-box {
+  background: #fff;
+  border-radius: 30px;
+  padding: 5px 10px;
+  width: 400px;
+  margin: auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  display: flex;
+}
+
+.search-input {
+  border: none;
+  flex: 1;
+  outline: none;
+  padding: 10px;
+  border-radius: 30px;
+  font-size: 1rem;
+}
+
+.search-btn {
+  background: #ff3b5c;
+  border: none;
+  color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.search-btn:hover {
+  background: #ff1744;
+}
