@@ -1,0 +1,220 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Hotel Booking ",
+    "version": "1.0.0",
+    "description": "API documentation for Hotel Booking System"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333/api"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "jwtToken": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "Enter your taken "
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "role": { "type": "string", "enum": ["customer", "admin"] }
+        }
+      },
+      "Hotel": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "location": { "type": "string" },
+          "description": { "type": "string" },
+          "pricePerNight": { "type": "number" }
+        }
+      },
+      "Room": {
+        "type": "object",
+        "properties": {
+          "hotel": { "type": "string" },
+          "roomType": { "type": "string" },
+          "capacity": { "type": "number" },
+          "price": { "type": "number" },
+          "status": { "type": "string", "enum": ["available", "booked"] }
+        }
+      },
+      "Booking": {
+        "type": "object",
+        "properties": {
+          "user": { "type": "string" },
+          "room": { "type": "string" },
+          "checkIn": { "type": "string", "format": "date" },
+          "checkOut": { "type": "string", "format": "date" },
+          "status": { "type": "string", "enum": ["pending", "confirmed", "cancelled"] },
+          "totalPrice": { "type": "number", "description": "Total price calculated automatically based on nights * room price" }
+
+        },
+        "required": ["room", "checkIn", "checkOut"]
+      },
+   
+      
+      "Review": {
+        "type": "object",
+        "properties": {
+          "user": { "type": "string" },
+          "hotel": { "type": "string" },
+          "rating": { "type": "number" },
+          "comment": { "type": "string" }
+        }
+      }
+    }
+  },
+  "security": [{ "jwtToken": [] }],
+  "paths": {
+    "/users/register": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Register a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/User" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "User registered successfully" }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Login user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login successful" }
+        }
+      }
+    },
+    "/hotels": {
+      "get": { "tags": ["Hotels"], "summary": "Get all hotels", "responses": { "200": { "description": "List of hotels" } } },
+      "post": { "tags": ["Hotels"], "summary": "Create a hotel", "security": [{ "jwtToken": [] }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Hotel" } } } }, "responses": { "201": { "description": "Hotel created" } } }
+    },
+    "/hotels/{id}": {
+      "get": { "tags": ["Hotels"], "summary": "Get hotel by ID", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Hotel details" } } },
+      "put": { "tags": ["Hotels"], "summary": "Update hotel", "security": [{ "jwtToken": [] }], "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Hotel" } } } }, "responses": { "200": { "description": "Hotel updated" } } },
+      "delete": { "tags": ["Hotels"], "summary": "Delete hotel", "security": [{ "jwtToken": [] }], "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Hotel deleted" } } }
+    },
+    "/rooms": {
+      "get": { "tags": ["Rooms"], "summary": "Get all rooms", "responses": { "200": { "description": "List of rooms" } } },
+      "post": { "tags": ["Rooms"], "summary": "Create room", "security": [{ "jwtToken": [] }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Room" } } } }, "responses": { "201": { "description": "Room created" } } }
+    },
+    "/rooms/{id}": {
+      "get": { "tags": ["Rooms"], "summary": "Get room by ID", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Room details" } } },
+      "put": { "tags": ["Rooms"], "summary": "Update room", "security": [{ "jwtToken": [] }], "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Room" } } } }, "responses": { "200": { "description": "Room updated" } } },
+      "delete": { "tags": ["Rooms"], "summary": "Delete room", "security": [{ "jwtToken": [] }], "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Room deleted" } } }
+    },
+    "/bookings": {
+      "get": {
+        "tags": ["Bookings"],
+        "summary": "Get all bookings",
+        "security": [{ "jwtToken": [] }],
+        "responses": { "200": { "description": "List of bookings" } }
+      },
+      "post": {
+        "tags": ["Bookings"],
+        "summary": "Create booking",
+        "description": "Creates a new booking. totalPrice is calculated automatically.",
+        "security": [{ "jwtToken": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "room": { "type": "string" },
+                  "checkIn": { "type": "string", "format": "date" },
+                  "checkOut": { "type": "string", "format": "date" }
+                },
+                "required": ["room", "checkIn", "checkOut"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Booking created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "booking": { "$ref": "#/components/schemas/Booking" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/{id}": {
+      "get": {
+        "tags": ["Bookings"],
+        "summary": "Get booking by ID",
+        "security": [{ "jwtToken": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Booking details" } }
+      },
+      "put": {
+        "tags": ["Bookings"],
+        "summary": "Update booking",
+        "security": [{ "jwtToken": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Booking" } } }
+        },
+        "responses": { "200": { "description": "Booking updated" } }
+      },
+      "delete": {
+        "tags": ["Bookings"],
+        "summary": "Delete booking",
+        "security": [{ "jwtToken": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": { "200": { "description": "Booking deleted" } }
+      }
+    },
+    "/reviews": {
+      "get": { "tags": ["Reviews"], "summary": "Get all reviews", "responses": { "200": { "description": "List of reviews" } } },
+      "post": { "tags": ["Reviews"], "summary": "Create review", "security": [{ "jwtToken": [] }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Review" } } } }, "responses": { "201": { "description": "Review created" } } }
+    },
+    "/reviews/{id}": {
+      "get": { "tags": ["Reviews"], "summary": "Get review by ID", "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Review details" } } },
+      "put": { "tags": ["Reviews"], "summary": "Update review", "security": [{ "jwtToken": [] }], "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "requestBody": { "required": true, "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Review" } } } }, "responses": { "200": { "description": "Review updated" } } },
+      "delete": { "tags": ["Reviews"], "summary": "Delete review", "security": [{ "jwtToken": [] }], "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }], "responses": { "200": { "description": "Review deleted" } } }
+    }
+  }
+}
